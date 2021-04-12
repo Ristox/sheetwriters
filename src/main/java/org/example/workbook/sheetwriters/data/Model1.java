@@ -1,35 +1,35 @@
 package org.example.workbook.sheetwriters.data;
 
-import java.util.ArrayList;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+import org.example.workbook.sheetwriters.blackbox.ExternalModel1;
 import org.example.workbook.sheetwriters.writers.WritableModel;
 
-@RequiredArgsConstructor
 public class Model1 implements WritableModel {
 
-    private final String name;
-    private final List<Model2> children = new ArrayList<>();
+    private final ExternalModel1 delegate;
+
+    public Model1(String name) {
+        delegate = new ExternalModel1(name);
+    }
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + " = " + this.name;
+        return this.delegate.toString();
     }
 
     public void setChildren(List<Model2> children) {
-        this.children.clear();
-        this.children.addAll(children);
+        this.delegate.setChildren(Model2.toDelegates(children));
     }
 
     public String getName() {
-        return name;
+        return this.delegate.getName();
     }
 
     public int getChildCount() {
-        return children.size();
+        return this.delegate.getChildCount();
     }
 
     public List<Model2> getChildren() {
-        return new ArrayList<>(this.children);
+        return Model2.wrapAll(this.delegate.getChildren());
     }
 }

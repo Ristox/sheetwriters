@@ -70,8 +70,8 @@ public class ResponseConverterTest {
 
         Sheet model2Sheet = result.getSheets().get(1);
         assertEquals(
-            "Model2: AFirst (24)\n" +
-                     "Model2: BSecond (99)",
+            "ExternalModel2: AFirst (24)\n" +
+                     "ExternalModel2: BSecond (99)",
             model2Sheet.toString()
         );
     }
